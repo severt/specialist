@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FooBar" default="dist">
+    <target name="prepare">
+        <echo msg="Making directory ./build" />
+        <mkdir dir="./build" />
+    </target>
+    <target name="build" depends="prepare">
+        <echo msg="Copying files to build directory..." />
+        <echo msg="Copying ./Some.php to ./build directory..." />
+        <copy file="./Some.php" tofile="./build/Some.php" />
+        <copy file="./index.php" tofile="./build/index.php" />
+    </target>
+    <target name="dist" depends="build">
+        <echo msg="Creating archive..." />
+        <zip destfile="./build/build.zip">
+            <fileset dir="./build">
+                <include name="*" />
+            </fileset>
+        </zip>
+        <echo msg="Files copied and compressed in build directory OK!"/>
+    </target>
+    <mail tolist="user@mysite.local" subject="build complete"
+          from="test@mysite.local">
+        The build process is a success...
+    </mail>
+</project>
